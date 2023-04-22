@@ -1,6 +1,7 @@
 import ISendMailDTO from "../dto/ISendMailDTO";
 import sgMail from "src/config/mail";
 import IMailProvider from "../models/IMailProvider";
+import {getTemplate} from "../templates/email-template";
 
 class MailProvider implements IMailProvider {
 
@@ -9,7 +10,7 @@ class MailProvider implements IMailProvider {
 			to: data.to.email,
 			from: 'tomazcxbusiness@gmail.com',
 			subject: data.subject,
-			text: `Here is your token: ${data.token} `
+			html: getTemplate(data.token)
 		})
 	}
 

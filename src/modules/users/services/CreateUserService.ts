@@ -39,6 +39,7 @@ export class CreateUserService {
 			name,
 			email,
 			password: hashedPassword,
+			isProvider: false
 		});
 
 		await this.cacheProvider.invalidatePrefix('provider-list');

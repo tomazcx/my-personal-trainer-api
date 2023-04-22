@@ -14,15 +14,9 @@ class UsersRepository implements IUsersRepository {
 	public async findAllProviders({
 		except_user_id,
 	}: IFindAllProvidersDTO): Promise<User[]> {
-		let users: User[];
-
-		if (except_user_id) {
-			users = await this.ormRepository.findMany({
-				where: {NOT: {id: (except_user_id)}},
-			});
-		} else {
-			users = await this.ormRepository.findMany();
-		}
+		const users = await this.ormRepository.findMany({
+			where: {isProvider: true},
+		});
 
 		return users;
 	}
@@ -41,10 +35,16 @@ class UsersRepository implements IUsersRepository {
 		name,
 		email,
 		password,
+		isProvider
 	}: ICreateUserDTO): Promise<User> {
-		const user = this.ormRepository.create({data: {name, email, password, created_at: new Date, updated_at: new Date}});
+		const user = this.ormRepository.create({data: {name, email, password, isProvider, created_at: new Date, updated_at: new Date}});
 
 		return user;
+	}
+
+	public async verifyIsProvider(id: string): Promise<boolean | null> {
+		const user = await this.ormRepository.findFirst({where: {id}})
+		return user!.isProvider
 	}
 
 	public async save(user: User): Promise<User> {

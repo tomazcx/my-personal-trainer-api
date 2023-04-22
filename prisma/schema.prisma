@@ -11,27 +11,32 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  name         String
-  email        String
-  password     String
-  avatar       String?
-  created_at   DateTime
-  updated_at   DateTime
-  UserTokens   UserToken[]
-  Appointments Appointments[]
+  id                    String               @id @default(uuid())
+  name                  String
+  email                 String
+  password              String
+  avatar                String?
+  isProvider            Boolean
+  created_at            DateTime             @default(now())
+  updated_at            DateTime             @default(now())
+  UserTokens            UserToken[]
+  appointmentsScheduled Appointment[]        @relation("user")
+  appointmentsProvided  Appointment[]        @relation("provider")
+  Notifications         UsersNotifications[]
 
   @@map("users")
 }
 
-model Appointments {
+model Appointment {
   id          String   @id @default(uuid())
   provider_id String
+  user_id     String
   date        DateTime
-  created_at  DateTime
-  updated_at  DateTime
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
 
-  user User @relation(fields: [provider_id], references: [id], onDelete: Cascade)
+  providedBy  User @relation("provider", fields: [provider_id], references: [id], onDelete: Cascade)
+  scheduledBy User @relation("user", fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("appointments")
 }
@@ -40,10 +45,34 @@ model UserToken {
   id         String   @id @default(uuid())
   token      String   @default(uuid())
   user_id    String
-  created_at DateTime
-  updated_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("user_tokens")
+}
+
+model Notification {
+  id           String   @id @default(uuid())
+  content      String
+  recipient_id String
+  read         Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+
+  users UsersNotifications[]
+
+  @@map("notifications")
+}
+
+model UsersNotifications {
+  user            User         @relation(fields: [user_id], references: [id])
+  notification    Notification @relation(fields: [notification_id], references: [id])
+  notification_id String
+  user_id         String
+  assignedAt      DateTime     @default(now())
+
+  @@id([user_id, notification_id])
+  @@map("users_notifications")
 }
