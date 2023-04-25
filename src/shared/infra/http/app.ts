@@ -2,11 +2,11 @@ import 'reflect-metadata'
 import 'dotenv/config'
 import express, {Request, Response, NextFunction} from 'express'; import cors from 'cors'
 import * as path from 'path'
-import AppError from 'src/shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import 'express-async-errors'
 import routes from './routes';
 import {errors} from 'celebrate';
-import 'src/shared/container'
+import '../../container'
 
 const app = express()
 app.use(cors());

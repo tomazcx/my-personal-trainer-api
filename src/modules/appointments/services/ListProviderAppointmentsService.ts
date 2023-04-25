@@ -1,7 +1,7 @@
 import {Appointment} from '@prisma/client';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
-import AppError from 'src/shared/errors/AppError';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 

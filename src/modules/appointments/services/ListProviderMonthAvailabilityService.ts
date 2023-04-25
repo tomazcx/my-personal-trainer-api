@@ -2,8 +2,8 @@ import {injectable, inject} from 'tsyringe';
 import {getDaysInMonth, getDate, isAfter} from 'date-fns';
 
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import AppError from 'src/shared/errors/AppError';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import AppError from '@shared/errors/AppError';
 
 interface IRequest {
 	provider_id: string;

@@ -1,5 +1,5 @@
 import {PrismaClient} from '@prisma/client';
-import {prismaClient} from 'src/shared/infra/db/prisma';
+import {prismaClient} from '@shared/infra/db/prisma';
 import ICreateNotificationDTO from '../../dto/ICreateNotificationDTO';
 import INotificationsRepository from '../INotificationRepository';
 import {Notification} from '@prisma/client';

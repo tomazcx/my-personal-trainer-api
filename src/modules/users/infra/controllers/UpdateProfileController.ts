@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {container} from 'tsyringe';
 
-import UpdateProfileService from 'src/modules/users/services/UpdateProfileService';
+import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 
 export default class UpdateProfileController {
 

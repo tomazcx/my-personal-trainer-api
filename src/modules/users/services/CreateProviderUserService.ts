@@ -1,6 +1,6 @@
 import {User} from "@prisma/client";
-import ICacheProvider from "src/shared/container/providers/CacheProvider/models/ICacheProvider";
-import AppError from "src/shared/errors/AppError";
+import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import AppError from "@shared/errors/AppError";
 import {inject, injectable} from "tsyringe";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 import IUsersRepository from "../repositories/IUsersRepository";

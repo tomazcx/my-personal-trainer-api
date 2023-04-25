@@ -1,5 +1,5 @@
 import {Appointment, Prisma, PrismaClient} from "@prisma/client";
-import {prismaClient} from "src/shared/infra/db/prisma";
+import {prismaClient} from "@shared/infra/db/prisma";
 import ICreateAppointmentDTO from "../../dto/ICreateAppointmentDTO";
 import IFindAllInDayFromProviderDTO from "../../dto/IFindAllInDayFromProviderDTO";
 import IFindAllInMonthFromProviderDTO from "../../dto/IFindAllInMonthFromProviderDTO";

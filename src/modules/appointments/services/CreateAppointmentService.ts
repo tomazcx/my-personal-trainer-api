@@ -1,9 +1,9 @@
 import {Appointment} from '@prisma/client';
 import {startOfHour, isBefore, getHours, format} from 'date-fns';
-import INotificationsRepository from 'src/modules/notifications/repositories/INotificationRepository';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
-import AppError from 'src/shared/errors/AppError';
+import INotificationsRepository from '@modules/notifications/repositories/INotificationRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 

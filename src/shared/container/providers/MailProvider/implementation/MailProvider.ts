@@ -1,5 +1,5 @@
 import ISendMailDTO from "../dto/ISendMailDTO";
-import sgMail from "src/config/mail";
+import sgMail from "@config/mail";
 import IMailProvider from "../models/IMailProvider";
 import {getTemplate} from "../templates/email-template";
 

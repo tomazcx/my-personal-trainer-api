@@ -1,6 +1,6 @@
 import {User} from '@prisma/client';
-import IUsersRepository from 'src/modules/users/repositories/IUsersRepository';
-import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import {injectable, inject} from 'tsyringe';
 
 interface IRequest {

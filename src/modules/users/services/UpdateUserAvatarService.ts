@@ -1,6 +1,6 @@
 import {User} from '@prisma/client';
-import IStorageProvider from 'src/shared/container/providers/StorageProvider/models/IStorageProvider';
-import AppError from 'src/shared/errors/AppError';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 
 import IUsersRepository from '../repositories/IUsersRepository';

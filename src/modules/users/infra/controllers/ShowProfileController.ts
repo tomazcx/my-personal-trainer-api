@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {container} from 'tsyringe';
 
-import ShowProfileService from 'src/modules/users/services/ShowProfileService';
+import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 export default class ShowProfileController {
 	public async show(req: Request, res: Response): Promise<Response> {

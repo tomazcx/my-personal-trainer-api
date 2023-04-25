@@ -4,7 +4,7 @@ import multer from 'multer';
 
 import CreateUserController from '../controllers/CreateUserController';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import uploadConfig from 'src/config/upload'
+import uploadConfig from '@config/upload'
 import UpdateUserAvatarController from '../controllers/UpdateUserAvatarController';
 import {CreateProviderUserController} from '../controllers/CreateProviderUserController';
 

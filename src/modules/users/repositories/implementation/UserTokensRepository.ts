@@ -1,6 +1,6 @@
-import IUserTokensRepository from 'src/modules/users/repositories/IUserTokensRepository';
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import {PrismaClient, UserToken} from '@prisma/client';
-import {prismaClient} from 'src/shared/infra/db/prisma';
+import {prismaClient} from '@shared/infra/db/prisma';
 
 class UserTokensRepository implements IUserTokensRepository {
 	private ormRepository: PrismaClient['userToken'];

@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
 import {celebrate, Segments, Joi} from 'celebrate';
-import ensureAuthenticated from 'src/modules/users/infra/middlewares/ensureAuthenticated';
+import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import ListProvidersController from '../controllers/ListProvidersController';
 import ListProviderMonthAvailabilityController from '../controllers/ListProviderMonthAvailabilityController';
 import ListProviderDayAvailabilityController from '../controllers/ListProviderDayAvailabilityController';

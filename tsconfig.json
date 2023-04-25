@@ -9,6 +9,17 @@
 		"strict": true,
 		"skipLibCheck": true,
 		"baseUrl": "./",
-		"rootDir": "./src"
+		"rootDir": "./src",
+		"paths": {
+			"@config/*": [
+				"@config/*"
+			],
+			"@modules/*": [
+				"@modules/*"
+			],
+			"@shared/*": [
+				"@shared/*"
+			]
+		}
 	}
 }

@@ -1,5 +1,5 @@
 import {PrismaClient, User} from '@prisma/client';
-import {prismaClient} from 'src/shared/infra/db/prisma';
+import {prismaClient} from '@shared/infra/db/prisma';
 import {ICreateUserDTO} from '../../dto/ICreateUserDTO';
 import {IFindAllProvidersDTO} from '../../dto/IFindAllProvidersDTO';
 import IUsersRepository from '../IUsersRepository';

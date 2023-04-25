@@ -4,8 +4,8 @@ import {User} from '@prisma/client';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
-import AppError from 'src/shared/errors/AppError';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import AppError from '@shared/errors/AppError';
 
 interface IRequest {
 	name: string;
