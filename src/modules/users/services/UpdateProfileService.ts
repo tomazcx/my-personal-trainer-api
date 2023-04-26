@@ -64,9 +64,10 @@ class UpdateProfileService {
 		user.name = name;
 		user.email = email;
 
+		await this.cacheProvider.invalidatePrefix('providers-list');
+
 		return this.usersRepository.save(user);
 
-		await this.cacheProvider.invalidatePrefix('provider-list');
 	}
 }
 
