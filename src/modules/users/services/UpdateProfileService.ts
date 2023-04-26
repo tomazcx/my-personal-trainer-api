@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import {User} from '@prisma/client';
+import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
 	user_id: string;
@@ -22,6 +23,9 @@ class UpdateProfileService {
 
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
+
+		@inject('CacheProvider')
+		private cacheProvider: ICacheProvider
 	) {}
 
 	public async execute({
@@ -61,6 +65,8 @@ class UpdateProfileService {
 		user.email = email;
 
 		return this.usersRepository.save(user);
+
+		await this.cacheProvider.invalidatePrefix('provider-list');
 	}
 }
 

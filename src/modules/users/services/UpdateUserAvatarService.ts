@@ -1,6 +1,7 @@
 import {User} from '@prisma/client';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import AppError from '@shared/errors/AppError';
+import ICacheProvider from 'src/shared/container/providers/CacheProvider/models/ICacheProvider';
 import {injectable, inject} from 'tsyringe';
 
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -18,6 +19,9 @@ class UpdateUserAvatarService {
 
 		@inject('StorageProvider')
 		private storageProvider: IStorageProvider,
+
+		@inject('CacheProvider')
+		private cacheProvider: ICacheProvider
 	) {}
 
 	public async execute({user_id, avatarFilename}: IRequest): Promise<User> {
@@ -35,6 +39,8 @@ class UpdateUserAvatarService {
 		user.avatar = avatarFilename;
 
 		await this.usersRepository.save(user);
+
+		await this.cacheProvider.invalidatePrefix('provider-list');
 
 		return user;
 	}
