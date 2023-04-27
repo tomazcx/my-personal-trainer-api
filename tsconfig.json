@@ -12,13 +12,13 @@
 		"rootDir": "./src",
 		"paths": {
 			"@config/*": [
-				"@config/*"
+				"./src/config/*"
 			],
 			"@modules/*": [
-				"@modules/*"
+				"./src/modules/*"
 			],
 			"@shared/*": [
-				"@shared/*"
+				"./src/shared/*"
 			]
 		}
 	}

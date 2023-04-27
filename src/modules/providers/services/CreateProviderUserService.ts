@@ -1,8 +1,9 @@
-import {User} from "@prisma/client";
+import IHashProvider from "@modules/users/providers/HashProvider/models/IHashProvider";
+import IUsersRepository from "@modules/users/repositories/IUsersRepository";
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import AppError from "@shared/errors/AppError";
 import {inject, injectable} from "tsyringe";
-import IHashProvider from "../providers/HashProvider/models/IHashProvider";
-import IUsersRepository from "../repositories/IUsersRepository";
+import {IProvidersRepository, UserWithProviderData} from "../repositories/IProvidersRepository";
 
 interface IRequest {
 	name: string
@@ -18,6 +19,9 @@ export class CreateProviderUserService {
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
 
+		@inject('ProvidersRepository')
+		private providersRepository: IProvidersRepository,
+
 		@inject('CacheProvider')
 		private cacheProvider: ICacheProvider,
 
@@ -25,7 +29,7 @@ export class CreateProviderUserService {
 		private hashProvider: IHashProvider
 	) {}
 
-	public async execute({email, name, password}: IRequest): Promise<User> {
+	public async execute({email, name, password, category_id}: IRequest): Promise<UserWithProviderData> {
 
 		const emailIsRegistered = await this.usersRepository.findByEmail(email)
 
@@ -35,11 +39,11 @@ export class CreateProviderUserService {
 
 		const hashedPassword = await this.hashProvider.generateHash(password)
 
-		const user = await this.usersRepository.create({
+		const user = await this.providersRepository.create({
 			name,
 			email,
 			password: hashedPassword,
-			isProvider: true
+			category_id
 		})
 
 		await this.cacheProvider.invalidatePrefix('providers-list');

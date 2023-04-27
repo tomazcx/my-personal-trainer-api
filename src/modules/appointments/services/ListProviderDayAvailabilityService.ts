@@ -1,9 +1,8 @@
 import {injectable, inject} from 'tsyringe';
 import {getHours, isAfter} from 'date-fns';
-
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import {IProvidersRepository} from '@modules/providers/repositories/IProvidersRepository';
 
 interface IRequest {
 	provider_id: string;
@@ -23,8 +22,8 @@ class ListProviderDayAvailabilityService {
 		@inject('AppointmentsRepository')
 		private appointmentsRepositiry: IAppointmentsRepository,
 
-		@inject('UsersRepository')
-		private usersRepository: IUsersRepository
+		@inject('ProvidersRepository')
+		private providersRepository: IProvidersRepository
 	) {}
 
 	public async execute({
@@ -34,18 +33,19 @@ class ListProviderDayAvailabilityService {
 		month,
 	}: IRequest): Promise<IResponse> {
 
-		const providerExists = await this.usersRepository.findById(provider_id)
+		const providerExists = await this.providersRepository.findById(provider_id)
 
 		if (!providerExists) {
 			throw new AppError('Personal trainer not found', 404)
 		}
 
-		const isProvider = await this.usersRepository.verifyIsProvider(provider_id)
+		const isProvider = await this.providersRepository.verifyIsProvider(provider_id)
 
 		if (!isProvider) {
 			throw new AppError("This user is not a personal trainer")
 		}
 
+		const provider = await this.providersRepository.findById(provider_id)
 
 		const appointments = await this.appointmentsRepositiry.findAllInDayFromProvider(
 			{
@@ -56,10 +56,11 @@ class ListProviderDayAvailabilityService {
 			},
 		);
 
-		const hourStart = 8;
+		const hourStart: number = provider?.provider_info.startHour ?? 8;
+		const hourEnd: number = provider?.provider_info.endHour ?? 17
 
 		const eachHourArray = Array.from(
-			{length: 10},
+			{length: hourEnd - hourStart},
 			(_, index) => index + hourStart,
 		);
 

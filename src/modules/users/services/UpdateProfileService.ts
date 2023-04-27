@@ -67,7 +67,6 @@ class UpdateProfileService {
 		await this.cacheProvider.invalidatePrefix('providers-list');
 
 		return this.usersRepository.save(user);
-
 	}
 }
 

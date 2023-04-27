@@ -4,6 +4,7 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+import {ProvidersRepository} from '@modules/providers/repositories/implementation/ProvidersRepository';
 
 interface IRequest {
 	provider_id: string;
@@ -18,8 +19,8 @@ class ListProviderAppointmentsService {
 		@inject('AppointmentsRepository')
 		private appointmentsRepositiry: IAppointmentsRepository,
 
-		@inject('UsersRepository')
-		private usersRepository: IUsersRepository,
+		@inject('ProvidersRepository')
+		private providersRepository: ProvidersRepository,
 
 		@inject('CacheProvider')
 		private cacheProvider: ICacheProvider,
@@ -32,7 +33,7 @@ class ListProviderAppointmentsService {
 		month,
 	}: IRequest): Promise<Appointment[]> {
 
-		const isProvider = await this.usersRepository.verifyIsProvider(provider_id)
+		const isProvider = await this.providersRepository.verifyIsProvider(provider_id)
 
 		if (!isProvider) {
 			throw new AppError('You are not a personal trainer.')

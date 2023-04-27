@@ -6,6 +6,7 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+import {IProvidersRepository} from '@modules/providers/repositories/IProvidersRepository';
 
 interface IRequest {
 	provider_id: string;
@@ -22,8 +23,8 @@ class CreateAppointmentService {
 		@inject('NotificationsRepository')
 		private notificationsRepository: INotificationsRepository,
 
-		@inject('UsersRepository')
-		private usersRepository: IUsersRepository,
+		@inject('ProvidersRepository')
+		private providersRepository: IProvidersRepository,
 
 		@inject('CacheProvider')
 		private cacheProvider: ICacheProvider,
@@ -36,13 +37,18 @@ class CreateAppointmentService {
 	}: IRequest): Promise<Appointment> {
 		const appointmentDate = startOfHour(date);
 
-		const providerExists = await this.usersRepository.findById(provider_id)
+		const providerExists = await this.providersRepository.exists(provider_id)
 
 		if (!providerExists) {
 			throw new AppError("This personal trainer does not exist.", 404)
 		}
 
-		const isProvider = await this.usersRepository.verifyIsProvider(provider_id)
+		const provider = await this.providersRepository.findById(provider_id)
+
+		const startHour = provider!.provider_info.startHour || 8
+		const endHour = provider!.provider_info.startHour || 17
+
+		const isProvider = await this.providersRepository.verifyIsProvider(provider_id)
 
 		if (!isProvider) {
 			throw new AppError("You can't create an appointment with a user that is not a personal trainer.")
@@ -56,9 +62,9 @@ class CreateAppointmentService {
 			throw new AppError("You can't create an appointment with yourself.");
 		}
 
-		if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17) {
+		if (getHours(appointmentDate) < startHour || getHours(appointmentDate) > endHour) {
 			throw new AppError(
-				'You can only create appointment between 8am and 5pm.',
+				`You can only create appointment between ${startHour < 10 ? `0${startHour}` : startHour}:00 and ${endHour < 10 ? `0${endHour}` : endHour}:00.`
 			);
 		}
 

@@ -11,20 +11,47 @@ datasource db {
 }
 
 model User {
-  id                    String               @id @default(uuid())
-  name                  String
-  email                 String
-  password              String
-  avatar                String?
-  isProvider            Boolean
-  created_at            DateTime             @default(now())
-  updated_at            DateTime             @default(now())
+  id               String   @id @default(uuid())
+  name             String
+  email            String
+  password         String
+  avatar           String?
+  provider_info_id String?  @unique
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now())
+
   UserTokens            UserToken[]
   appointmentsScheduled Appointment[]        @relation("user")
-  appointmentsProvided  Appointment[]        @relation("provider")
+  ProviderInfo          ProviderInfo?
   Notifications         UsersNotifications[]
 
   @@map("users")
+}
+
+model ProviderInfo {
+  id                   String        @id @default(uuid())
+  user_id              String        @unique
+  description          String?
+  startHour            Int
+  endHour              Int
+  category_id          String
+  appointmentsProvided Appointment[] @relation("provider")
+  created_at           DateTime      @default(now())
+  updated_at           DateTime      @default(now())
+
+  userRelated User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@map("providers_info")
+}
+
+model Category {
+  id       String @id @default(uuid())
+  category String @unique
+
+  Providers ProviderInfo[]
+
+  @@map("categories")
 }
 
 model Appointment {
@@ -35,8 +62,8 @@ model Appointment {
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
 
-  providedBy  User @relation("provider", fields: [provider_id], references: [id], onDelete: Cascade)
-  scheduledBy User @relation("user", fields: [user_id], references: [id], onDelete: Cascade)
+  providedBy  ProviderInfo @relation("provider", fields: [provider_id], references: [id], onDelete: Cascade)
+  scheduledBy User         @relation("user", fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("appointments")
 }
