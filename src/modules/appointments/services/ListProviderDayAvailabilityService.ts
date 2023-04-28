@@ -56,11 +56,12 @@ class ListProviderDayAvailabilityService {
 			},
 		);
 
-		const hourStart: number = provider?.provider_info.startHour ?? 8;
-		const hourEnd: number = provider?.provider_info.endHour ?? 17
+		const hourStart = 8;
+		const startWorkingHour: number = provider?.ProviderInfo.startHour ?? 18
+		const endWorkingHour: number = provider?.ProviderInfo.endHour ?? 17
 
 		const eachHourArray = Array.from(
-			{length: hourEnd - hourStart},
+			{length: 10},
 			(_, index) => index + hourStart,
 		);
 
@@ -75,7 +76,7 @@ class ListProviderDayAvailabilityService {
 
 			return {
 				hour,
-				available: !hasAppointmentInHour && isAfter(compareDate, currentDate),
+				available: !hasAppointmentInHour && isAfter(compareDate, currentDate) && (hour >= startWorkingHour && hour <= endWorkingHour),
 			};
 		});
 

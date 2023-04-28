@@ -24,6 +24,12 @@ export class UpdateProviderUserService {
 
 	public async execute({id, startHour, endHour, ...rest}: IRequest): Promise<void> {
 
+		const verifyIsProvider = await this.providersRepository.verifyIsProvider(id)
+
+		if (!verifyIsProvider) {
+			throw new AppError('You are not a provider', 403)
+		}
+
 		const providerExists = await this.providersRepository.exists(id)
 
 		if (!providerExists) {
@@ -41,7 +47,9 @@ export class UpdateProviderUserService {
 			}
 		}
 
-		await this.providersRepository.updateProviderData(rest, id)
+		console.log(rest)
+
+		await this.providersRepository.updateProviderData({endHour, startHour, ...rest}, id,)
 
 		await this.cacheProvider.invalidate('providers-list')
 

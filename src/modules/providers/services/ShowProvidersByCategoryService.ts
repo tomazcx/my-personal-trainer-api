@@ -15,7 +15,7 @@ export class ShowProvidersByCategoryService {
 	) {}
 
 	public async execute(category_id: string): Promise<UserWithProviderData[]> {
-		let users = await this.cacheProvider.recover<UserWithProviderData[]>(`providers-list-${category_id}`)
+		let users = await this.cacheProvider.recover<UserWithProviderData[]>(`providers-list:${category_id}`)
 
 		if (!users) {
 			users = await this.providersRepository.findByCategory(category_id)

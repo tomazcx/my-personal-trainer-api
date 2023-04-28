@@ -7,7 +7,7 @@ export class UpdateProviderUserController {
 	public async handle(req: Request, res: Response): Promise<Response> {
 
 		const {description, startHour, endHour, category_id} = req.body
-		const {id} = req.params
+		const id = req.user.id
 
 		const service = container.resolve(UpdateProviderUserService)
 

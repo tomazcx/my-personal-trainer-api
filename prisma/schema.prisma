@@ -22,6 +22,7 @@ model User {
 
   UserTokens            UserToken[]
   appointmentsScheduled Appointment[]        @relation("user")
+  appointmentsProvided Appointment[] @relation("provider")
   ProviderInfo          ProviderInfo?
   Notifications         UsersNotifications[]
 
@@ -35,7 +36,6 @@ model ProviderInfo {
   startHour            Int
   endHour              Int
   category_id          String
-  appointmentsProvided Appointment[] @relation("provider")
   created_at           DateTime      @default(now())
   updated_at           DateTime      @default(now())
 
@@ -62,7 +62,7 @@ model Appointment {
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
 
-  providedBy  ProviderInfo @relation("provider", fields: [provider_id], references: [id], onDelete: Cascade)
+  providedBy  User @relation("provider", fields: [provider_id], references: [id], onDelete: Cascade)
   scheduledBy User         @relation("user", fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("appointments")

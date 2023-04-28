@@ -45,8 +45,8 @@ class CreateAppointmentService {
 
 		const provider = await this.providersRepository.findById(provider_id)
 
-		const startHour = provider!.provider_info.startHour || 8
-		const endHour = provider!.provider_info.startHour || 17
+		const startHour = provider!.ProviderInfo.startHour || 8
+		const endHour = provider!.ProviderInfo.endHour || 17
 
 		const isProvider = await this.providersRepository.verifyIsProvider(provider_id)
 
@@ -76,6 +76,8 @@ class CreateAppointmentService {
 		if (isSameDate) {
 			throw new AppError('This appointment is already booked');
 		}
+
+		console.log(user_id)
 
 		const appointment = await this.appointmentsRepository.create({
 			provider_id,
