@@ -59,9 +59,9 @@ class ListProviderAppointmentsService {
 			await this.cacheProvider.save(cacheKey, appointments);
 		}
 
-		appointments = appointments.map(app => {return {...app, date: subHours(app.date, 3)}})
+		const formatedAppointments = appointments.map(app => {return {...app, date: subHours(app.date, 3)}})
 
-		return appointments;
+		return formatedAppointments;
 	}
 }
 
