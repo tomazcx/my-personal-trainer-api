@@ -1,6 +1,6 @@
 import {ICreateProviderDTO} from "@modules/providers/dto/ICreateProviderDTO";
 import {IUpdateProviderDataDTO} from "@modules/providers/dto/IUpdateProviderDataDTO";
-import {Prisma, PrismaClient, User} from "@prisma/client";
+import {Category, Prisma, PrismaClient, User} from "@prisma/client";
 import {prismaClient} from "@shared/infra/db/prisma";
 import {IProvidersRepository, UserWithProviderData} from "../IProvidersRepository";
 
@@ -152,5 +152,4 @@ export class ProvidersRepository implements IProvidersRepository {
 			}
 		})
 	}
-
 }

@@ -11,6 +11,8 @@ import INotificationsRepository from '@modules/notifications/repositories/INotif
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import {IProvidersRepository} from '@modules/providers/repositories/IProvidersRepository';
 import {ProvidersRepository} from '@modules/providers/repositories/implementation/ProvidersRepository';
+import {ICategoriesRepository} from '@modules/providers/repositories/ICategoriesRepository';
+import {CategoriesRepository} from '@modules/providers/repositories/implementation/CategoriesRepository';
 
 container.registerSingleton<IAppointmentsRepository>(
 	'AppointmentsRepository',
@@ -33,6 +35,8 @@ container.registerSingleton<INotificationsRepository>(
 	'NotificationsRepository',
 	NotificationsRepository,
 );
+
+container.registerSingleton<ICategoriesRepository>('CategoriesRepository', CategoriesRepository)
 
 
 
