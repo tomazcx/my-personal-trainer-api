@@ -4,7 +4,6 @@ import {User} from '@prisma/client';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
@@ -22,8 +21,6 @@ export class CreateUserService {
 		@inject('HashProvider')
 		private hashProvider: IHashProvider,
 
-		@inject('CacheProvider')
-		private cacheProvider: ICacheProvider,
 	) {}
 
 	public async execute({name, email, password}: IRequest): Promise<User> {
@@ -38,11 +35,8 @@ export class CreateUserService {
 		const user = await this.usersRepository.create({
 			name,
 			email,
-			password: hashedPassword,
-			isProvider: false
+			password: hashedPassword
 		});
-
-		await this.cacheProvider.invalidatePrefix('provider-list');
 
 		return user;
 	}

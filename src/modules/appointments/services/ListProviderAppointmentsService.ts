@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError';
 import {injectable, inject} from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import {ProvidersRepository} from '@modules/providers/repositories/implementation/ProvidersRepository';
+import {subHours} from 'date-fns';
 
 interface IRequest {
 	provider_id: string;
@@ -57,6 +58,8 @@ class ListProviderAppointmentsService {
 
 			await this.cacheProvider.save(cacheKey, appointments);
 		}
+
+		appointments = appointments.map(app => {return {...app, date: subHours(app.date, 3)}})
 
 		return appointments;
 	}
