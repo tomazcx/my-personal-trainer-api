@@ -76,7 +76,7 @@ class ListProviderDayAvailabilityService {
 
 			return {
 				hour,
-				available: !hasAppointmentInHour && isAfter(compareDate, currentDate) && (hour >= startWorkingHour && hour <= endWorkingHour),
+				available: !hasAppointmentInHour && isAfter(compareDate, subHours(currentDate, 3)) && (hour >= startWorkingHour && hour <= endWorkingHour),
 			};
 		});
 
