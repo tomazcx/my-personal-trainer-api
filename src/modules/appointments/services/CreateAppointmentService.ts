@@ -1,5 +1,5 @@
 import {Appointment} from '@prisma/client';
-import {startOfHour, isBefore, getHours, format} from 'date-fns';
+import {startOfHour, isBefore, getHours, format, subHours} from 'date-fns';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
@@ -54,7 +54,7 @@ class CreateAppointmentService {
 			throw new AppError("You can't create an appointment with a user that is not a personal trainer.")
 		}
 
-		if (isBefore(appointmentDate, Date.now())) {
+		if (isBefore(appointmentDate, subHours(Date.now(), 3))) {
 			throw new AppError("You can't create an appointment on a past date.");
 		}
 
