@@ -74,6 +74,20 @@ class AppointmentsRepository implements IAppointmentsRepository {
 		return appointments;
 	}
 
+	public async findAllClientAppointments(id: string): Promise<Appointment[]> {
+		const appointments = await this.ormRepository.findMany({
+			where: {
+				user_id: id
+			},
+			include: {
+				providedBy: true,
+				scheduledBy: true
+			}
+		})
+
+		return appointments
+	}
+
 	public async create({
 		provider_id,
 		user_id,

@@ -4,10 +4,12 @@ import {celebrate, Segments, Joi} from 'celebrate';
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 import CreateAppointmentController from '../controllers/CreateAppointmentController';
 import ListProviderAppointmentsController from '../controllers/ListProviderAppointmentsController';
+import {ListClientAppointmentsController} from '../controllers/ListClientAppointmentsController';
 
 const appointmentsRouter = Router();
 const appointmentsController = new CreateAppointmentController();
 const providerAppointmentsController = new ListProviderAppointmentsController()
+const listClientAppointmentsController = new ListClientAppointmentsController()
 
 appointmentsRouter.use(ensureAuthenticated);
 
@@ -31,5 +33,7 @@ appointmentsRouter.get('/me',
 		}
 	}),
 	providerAppointmentsController.index);
+
+appointmentsRouter.get('/client/me', listClientAppointmentsController.handle)
 
 export default appointmentsRouter;
