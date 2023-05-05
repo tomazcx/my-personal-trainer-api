@@ -19,7 +19,7 @@ interface IResponse {
 }
 
 @injectable()
-class AuthenticateUserService {
+class AuthenticateProviderService {
 	constructor(
 		@inject('UsersRepository')
 		private usersRepository: IUsersRepository,
@@ -29,10 +29,15 @@ class AuthenticateUserService {
 	) {}
 
 	public async execute({email, password}: IRequest): Promise<IResponse> {
+
 		const user = await this.usersRepository.findByEmail(email);
 
 		if (!user) {
 			throw new AppError('Incorrect email/password combination.', 401);
+		}
+
+		if (user.provider_info_id === null) {
+			throw new AppError("You can't authenticate as a provider", 403)
 		}
 
 		const passwordMatch = await this.hashProvider.compareHash(
@@ -54,5 +59,6 @@ class AuthenticateUserService {
 	}
 }
 
-export default AuthenticateUserService;
+export default AuthenticateProviderService;
+
 
