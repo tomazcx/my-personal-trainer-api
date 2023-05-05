@@ -41,6 +41,8 @@ class UpdateUserAvatarService {
 		await this.usersRepository.save(user);
 
 		await this.cacheProvider.invalidatePrefix('providers-list');
+		await this.cacheProvider.invalidatePrefix('providers-appointments');
+		await this.cacheProvider.invalidatePrefix('user-appointments');
 
 		return user;
 	}

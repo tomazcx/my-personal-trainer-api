@@ -65,6 +65,8 @@ class UpdateProfileService {
 		user.email = email;
 
 		await this.cacheProvider.invalidatePrefix('providers-list');
+		await this.cacheProvider.invalidatePrefix('providers-appointments');
+		await this.cacheProvider.invalidatePrefix('user-appointments');
 
 		return this.usersRepository.save(user);
 	}
