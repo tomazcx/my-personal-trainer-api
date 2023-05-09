@@ -46,7 +46,7 @@ class CreateAppointmentService {
 		const provider = await this.providersRepository.findById(provider_id)
 
 		const startHour = provider!.ProviderInfo.startHour || 8
-		const endHour = provider!.ProviderInfo.endHour || 17
+		const endHour = provider!.ProviderInfo.endHour || 18
 
 		const isProvider = await this.providersRepository.verifyIsProvider(provider_id)
 

@@ -39,7 +39,7 @@ export class UpdateProviderUserService {
 		if (startHour && endHour) {
 
 			if ((startHour > 24 || startHour < 0) || (endHour > 24 || endHour < 0)) {
-				throw new AppError('Select a hour between 0 and 24', 422)
+				throw new AppError('Select a hour between 1 and 24', 422)
 			}
 
 			if (startHour >= endHour) {

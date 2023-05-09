@@ -109,7 +109,7 @@ export class ProvidersRepository implements IProvidersRepository {
 				ProviderInfo: {
 					create: {
 						startHour: 8,
-						endHour: 17,
+						endHour: 18,
 						category: {
 							connect: {
 								id: category_id
