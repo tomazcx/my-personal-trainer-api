@@ -38,12 +38,12 @@ export class UpdateProviderUserService {
 
 		if (startHour && endHour) {
 
-			if ((startHour > 24 || startHour < 0) || (endHour > 24 || endHour < 0)) {
-				throw new AppError('Select a hour between 1 and 24', 422)
+			if ((startHour > 21 || startHour < 6) || (endHour > 21 || endHour < 6)) {
+				throw new AppError('Select a hour between 6 and 21', 422)
 			}
 
 			if (startHour >= endHour) {
-				throw new AppError('The start hour cannot be bigger or equal thant the end hour', 422)
+				throw new AppError('The start hour cannot be bigger or equal than the end hour', 422)
 			}
 		}
 

@@ -56,12 +56,12 @@ class ListProviderDayAvailabilityService {
 			},
 		);
 
-		const hourStart = 0;
+		const hourStart = 6;
 		const startWorkingHour: number = provider?.ProviderInfo.startHour ?? 8
 		const endWorkingHour: number = provider?.ProviderInfo.endHour ?? 18
 
 		const eachHourArray = Array.from(
-			{length: 24},
+			{length: 16},
 			(_, index) => index + hourStart,
 		);
 
